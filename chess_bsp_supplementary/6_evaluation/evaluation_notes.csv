@@ -1,0 +1,15 @@
+id,tier,dimension,score,reason
+1,advanced,clarity,4,dense multi-clause sentence
+4,advanced,clarity,4,dense; jargon-heavy even for the tier
+4,beginner,groundedness,4,'perfectly placed' is mild hyperbole beyond the verified facts
+12,beginner,faithfulness,4,names only pawn+rook; omits the b3-bishop flagged by the attribution
+13,advanced,clarity,4,long concrete clause chain
+13,advanced,groundedness,4,'mating attack on the freshly opened king' infers detail beyond the recorded evaluations
+13,intermediate,clarity,4,long sentences
+16,advanced,clarity,4,compressed dual-threat sentence
+18,beginner,faithfulness,4,"omits the e2-bishop, the attribution's top White asset"
+21,intermediate,clarity,4,clause-dense
+22,beginner,faithfulness,4,"foregrounds the c8-knight, which the attribution ranks below the Qd3/Rd1 battery"
+23,advanced,clarity,4,abstract phrasing ('rebounds tactically')
+23,intermediate,clarity,4,long qualifying clauses
+24,advanced,clarity,4,dense imbalance terminology

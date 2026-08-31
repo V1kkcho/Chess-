@@ -1,0 +1,77 @@
+# Worked Examples — Multi-Level Chess Position Explainer
+
+These are sample outputs illustrating what the system is designed to produce for two
+kinds of position: an ordinary one (the 3–4 sentence rule) and a forced checkmate
+(the length exception). Both input positions are legal; the evaluations shown are
+rounded illustrations, not claims of engine-exact numbers.
+
+---
+
+## Example 1 — Normal position (side is a clean piece up)
+
+**Input given to the model**
+
+- **Position:** `r2q1rk1/ppp2ppp/8/3p4/1b1P4/2N1PN2/PP3PPP/R2Q1RK1 w - - 0 1`
+  (White: Kg1, Qd1, Ra1, Rf1, Nc3, Nf3, pawns a2 b2 d4 e3 f2 g2 h2. Black: Kg8, Qd8,
+  Ra8, Rf8, Bb4, pawns a7 b7 c7 d5 f7 g7 h7.)
+- **Evaluation:** `+3.0` (White's point of view, in pawns)
+- **Piece-by-piece** (each piece's contribution to the evaluation, White's point of
+  view — `+` favours White, `−` favours Black):
+
+  ```
+  Nf3  →  +0,35
+  Nc3  →  +0,28
+  d4   →  +0,22
+  Kg1  →  +0,25
+  Qd1  →  +0,10
+  Bb4  →  -0,12
+  Qd8  →  -0,10
+  d5   →  +0,06
+  ```
+
+**Output**
+
+### Beginner (under 1400)
+White is clearly winning, because White has an extra piece — two knights against just
+one bishop — and everything else is equal. Nothing dangerous is happening right now:
+the white king is tucked safely behind its pawns and Black has no threat. The simplest
+plan is to bring the rooks and queen into play and trade pieces whenever you can,
+because when you are a piece up, swapping pieces makes the win easier. Just keep your
+own pieces protected and don't give the extra piece back.
+
+### Intermediate (1400–2200)
+White is up a clean minor piece with a safe king and Black has no compensation, so
+this is close to winning (about +3). The position is quiet: Black's b4-bishop is doing
+little and the isolated d5-pawn on the half-open file is a long-term target. White
+should finish developing (rooks to c1/e1, reroute the queen) and steer toward
+exchanges, since simplification favours the side with extra material. Watch only that
+the bishop doesn't create a cheap trick against c3; otherwise trade down toward a won
+endgame.
+
+### Advanced (2200+)
+White is a clean piece up (~+3) with no structural or dynamic compensation for Black:
+the king is secure, the b4-bishop bites on nothing, and the isolated d5-pawn is a
+static weakness on the half-open d-file. The conversion is trivial in principle —
+defuse any b4/c3 friction (a2-a3 to question the bishop, or Ne2/Qd3 rerouting), then
+trade queens and a pair of rooks to kill counterplay. With no imbalance working for
+Black, mass exchanges convert most cleanly; the extra knight decides while d5 is
+rounded up or simply ignored. There is no reason to keep pieces on — minimise Black's
+activity and enter a won minor-piece or rook endgame.
+
+---
+
+## Example 2 — Forced checkmate (length exception applies)
+
+**Input given to the model**
+
+- **Position:** `5r1k/6pp/7N/8/8/1Q6/8/6K1 w - - 0 1`
+  (White: Kg1, Qb3, Nh6. Black: Kh8, Rf8, pawns g7 h7.)
+- **Evaluation:** `+99989` (a large positive spike — a forced mate for White)
+- **Piece-by-piece:** The knight on h6 covers f7 and g8; the queen on b3 rakes the
+  long light diagonal to g8. Black's king on h8 is boxed in by its own rook on f8 and
+  the g7/h7 pawns, with no flight squares — the classic smothered-mate picture:
+  `Qg8+` forces `...Rxg8`, then `Nf7` is mate.
+
+**Output**
+
+`1.Qg8+ Rxg8 2.Nf7#` (forced smothered mate).
